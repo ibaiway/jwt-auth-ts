@@ -34,7 +34,8 @@ async function register(req: Request, res: Response): Promise<Response> {
     const token = jsonwebtoken.sign(
       {
         id: user._id,
-        email
+        email,
+        role: user.role
       },
       CONFIG.JWT_TOKEN
     );
@@ -71,7 +72,8 @@ async function login(req: Request, res: Response): Promise<Response> {
   const token = jsonwebtoken.sign(
     {
       id: user._id,
-      email
+      email,
+      role: user.role
     },
     CONFIG.JWT_TOKEN
   );
