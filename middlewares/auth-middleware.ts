@@ -1,0 +1,21 @@
+import { NextFunction, Request, Response } from 'express';
+import jsonwebtoken from 'jsonwebtoken';
+import CONFIG from '../config/config';
+
+function verifyToken(req: Request, res: Response, next: NextFunction): void {
+  try {
+    if (!req.headers.authorization || !req.headers.authorization) {
+      throw new Error('Missing authorization header');
+    }
+    const bearerToken = req.headers.authorization?.substring(7);
+
+    const validToken = jsonwebtoken.verify(bearerToken, CONFIG.JWT_TOKEN);
+    next();
+  } catch (error) {
+    res.status(401).json({
+      error: 'Unauthorized'
+    });
+  }
+}
+
+export default verifyToken;

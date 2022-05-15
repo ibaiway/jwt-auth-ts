@@ -5,11 +5,13 @@ dotenv.config();
 interface ENV {
   PORT: number | undefined;
   MONGO_URI: string | undefined;
+  JWT_TOKEN: string | undefined;
 }
 
 interface Config {
   PORT: number;
   MONGO_URI: string;
+  JWT_TOKEN: string;
 }
 
 // Loading process.env as ENV interface
@@ -17,7 +19,8 @@ interface Config {
 const getConfig = (): ENV => {
   return {
     PORT: process.env.PORT ? Number(process.env.PORT) : undefined,
-    MONGO_URI: process.env.MONGO_URI
+    MONGO_URI: process.env.MONGO_URI,
+    JWT_TOKEN: process.env.JWT_TOKEN
   };
 };
 

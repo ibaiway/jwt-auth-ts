@@ -1,9 +1,10 @@
 import { Request, Response } from 'express';
-
 import bcrypt from 'bcrypt';
+import jsonwebtoken from 'jsonwebtoken';
 import UserModel from '../models/user-model';
 import schemaLogin from '../schemas/login-schema';
 import schemaRegister from '../schemas/register-schema';
+import CONFIG from '../config/config';
 
 async function register(req: Request, res: Response): Promise<Response> {
   const { error } = schemaRegister.validate(req.body);
@@ -30,9 +31,16 @@ async function register(req: Request, res: Response): Promise<Response> {
       email,
       password: hash
     });
+    const token = jsonwebtoken.sign(
+      {
+        id: user._id,
+        email
+      },
+      CONFIG.JWT_TOKEN
+    );
     return res.status(201).json({
       error: null,
-      data: user
+      data: { token }
     });
   } catch (error) {
     return res.status(400).json({ error });
@@ -60,10 +68,16 @@ async function login(req: Request, res: Response): Promise<Response> {
       error: 'Incorrect login details'
     });
   }
-
+  const token = jsonwebtoken.sign(
+    {
+      id: user._id,
+      email
+    },
+    CONFIG.JWT_TOKEN
+  );
   return res.status(200).json({
     error: null,
-    data: 'Welcome Home to Barcelona Hackathon'
+    data: { token }
   });
 }
 
