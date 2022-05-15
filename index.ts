@@ -4,7 +4,7 @@ import morgan from 'morgan';
 import { authRouter } from './routes/auth-routes';
 import connect from './db/connect';
 import CONFIG from './config/config';
-import verifyToken from './middlewares/auth-middleware';
+import { verifyToken } from './middlewares/auth-middleware';
 import { seedAdmin } from './db/seed';
 import { jobxUsers } from './db/jobx-users';
 
@@ -15,7 +15,7 @@ app.use(bodyParser.json());
 
 app.use('/api', authRouter);
 
-app.get('/', (req: Request, res: Response) => {
+app.get('/', (_req: Request, res: Response) => {
   res.send('Hello Barcelona!');
 });
 
@@ -23,7 +23,7 @@ app.get(
   '/api/users',
   (req: Request, res: Response, next: NextFunction) =>
     verifyToken(req, res, next),
-  (req: Request, res: Response) => {
+  (_req: Request, res: Response) => {
     res.json({ data: jobxUsers });
   }
 );

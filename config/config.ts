@@ -30,17 +30,17 @@ const getConfig = (): ENV => {
 // it as Config which just removes the undefined from our type
 // definition.
 
-const getSanitzedConfig = (config: ENV): Config => {
-  for (const [key, value] of Object.entries(config)) {
+const getSanitzedConfig = (configValues: ENV): Config => {
+  for (const [key, value] of Object.entries(configValues)) {
     if (value === undefined) {
       throw new Error(`Missing key ${key} in config.env`);
     }
   }
-  return config as Config;
+  return configValues as Config;
 };
 
-const config = getConfig();
+const uncheckedConfig = getConfig();
 
-const sanitizedConfig = getSanitzedConfig(config);
+const config = getSanitzedConfig(uncheckedConfig);
 
-export default sanitizedConfig;
+export default config;

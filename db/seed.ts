@@ -23,6 +23,7 @@ export async function seedAdmin() {
       console.log('Admin seeder completed');
     }
   } catch (error) {
+    console.log('Error on running DB seeder ', error);
     throw error;
   }
 }

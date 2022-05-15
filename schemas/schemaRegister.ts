@@ -6,11 +6,11 @@ const schemaRegister = Joi.object({
   password: Joi.string()
     .required()
     .min(8)
-    .regex(/[a-z]{1,}/)
+    .regex(/[a-z]+/)
     .message('Lowercase character is required')
-    .regex(/[A-Z]{1,}/)
+    .regex(/[A-Z]+/)
     .message('Uppercase character is required')
-    .regex(/[0-9]{1,}/)
+    .regex(/\d+/)
     .message('A number is required')
 });
 

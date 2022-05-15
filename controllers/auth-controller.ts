@@ -2,8 +2,8 @@ import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 import jsonwebtoken from 'jsonwebtoken';
 import UserModel from '../models/user-model';
-import schemaLogin from '../schemas/login-schema';
-import schemaRegister from '../schemas/register-schema';
+import schemaLogin from '../schemas/schemaLogin';
+import schemaRegister from '../schemas/schemaRegister';
 import CONFIG from '../config/config';
 
 async function register(req: Request, res: Response): Promise<Response> {
@@ -43,8 +43,8 @@ async function register(req: Request, res: Response): Promise<Response> {
       error: null,
       data: { token }
     });
-  } catch (error) {
-    return res.status(400).json({ error });
+  } catch (e) {
+    return res.status(400).json({ e });
   }
 }
 

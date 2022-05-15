@@ -4,7 +4,10 @@ import CONFIG from '../config/config';
 
 function verifyToken(req: Request, res: Response, next: NextFunction): void {
   try {
-    if (!req.headers.authorization || !req.headers.authorization) {
+    if (
+      !req.headers.authorization ||
+      !req.headers.authorization.startsWith('Bearer ')
+    ) {
       throw new Error('Missing authorization header');
     }
     const bearerToken = req.headers.authorization?.substring(7);
@@ -21,4 +24,4 @@ function verifyToken(req: Request, res: Response, next: NextFunction): void {
   }
 }
 
-export default verifyToken;
+export { verifyToken };
