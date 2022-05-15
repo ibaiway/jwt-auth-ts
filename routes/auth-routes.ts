@@ -2,6 +2,7 @@ import { Router } from 'express';
 import bcrypt from 'bcrypt';
 import UserModel from '../models/user-model';
 import schemaRegister from '../schemas/register-schema';
+import schemaLogin from '../schemas/login-schema';
 
 const authRouter = Router();
 
@@ -40,6 +41,12 @@ authRouter.post('/register', async (req, res) => {
 });
 
 authRouter.post('/login', async (req, res) => {
+  const { error } = schemaLogin.validate(req.body);
+  if (error) {
+    return res.status(400).json({
+      error: error.details[0].message
+    });
+  }
   const { email, password } = req.body;
   const user = await UserModel.findOne({ email });
   if (!user) {
