@@ -15,7 +15,7 @@ async function register(req: Request, res: Response): Promise<Response> {
   }
   const { username, email, password } = req.body;
 
-  const emailExists = await UserModel.findOne({ email });
+  const emailExists = await UserModel.findOne({ email: email.toString() });
 
   if (emailExists) {
     return res.status(400).json({
@@ -27,8 +27,8 @@ async function register(req: Request, res: Response): Promise<Response> {
 
   try {
     const user = await UserModel.create({
-      username,
-      email,
+      username: username.toString,
+      email: email.toString,
       password: hash
     });
     const token = jsonwebtoken.sign(
@@ -56,7 +56,7 @@ async function login(req: Request, res: Response): Promise<Response> {
     });
   }
   const { email, password } = req.body;
-  const user = await UserModel.findOne({ email });
+  const user = await UserModel.findOne({ email: email.toString() });
   if (!user) {
     return res.status(400).json({
       error: 'Incorrect login details'
