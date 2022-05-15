@@ -1,11 +1,26 @@
 import { Router } from 'express';
 import bcrypt from 'bcrypt';
 import UserModel from '../models/user-model';
+import schemaRegister from '../schemas/register-schema';
 
 const authRouter = Router();
 
 authRouter.post('/register', async (req, res) => {
+  const { error } = schemaRegister.validate(req.body);
+  if (error) {
+    return res.status(400).json({
+      error: error.details[0].message
+    });
+  }
   const { username, email, password } = req.body;
+
+  const emailExists = await UserModel.findOne({ email });
+
+  if (emailExists) {
+    return res.status(400).json({
+      error: 'Email alredy registered'
+    });
+  }
   const salt = await bcrypt.genSalt(10);
   const hash = await bcrypt.hash(password, salt);
 

@@ -3,9 +3,9 @@ import bodyParser from 'body-parser';
 import morgan from 'morgan';
 import { authRouter } from './routes/auth-routes';
 import connect from './db/connect';
+import CONFIG from './config/config';
 
 const app: Application = express();
-const PORT = process.env.PORT || 9000;
 app.use(morgan('dev'));
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -20,6 +20,6 @@ connect()
   .then(() => console.log('DB Connected'))
   .catch((e) => console.log(`Error in DB: ${e}`));
 
-app.listen(PORT, (): void => {
-  console.log(`The application is listening on port ${PORT}!`);
+app.listen(CONFIG.PORT, (): void => {
+  console.log(`The application is listening on port ${CONFIG.PORT}!`);
 });
