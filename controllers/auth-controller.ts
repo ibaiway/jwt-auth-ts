@@ -27,8 +27,8 @@ async function register(req: Request, res: Response): Promise<Response> {
 
   try {
     const user = await UserModel.create({
-      username: username.toString,
-      email: email.toString,
+      username: username.toString(),
+      email: email.toString(),
       password: hash
     });
     const token = jsonwebtoken.sign(
