@@ -1,10 +1,9 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
-import jsonwebtoken from 'jsonwebtoken';
 import UserModel from '../models/user-model';
 import schemaLogin from '../schemas/schemaLogin';
 import schemaRegister from '../schemas/schemaRegister';
-import CONFIG from '../config/config';
+import signToken from '../utils/signToken';
 
 async function register(req: Request, res: Response): Promise<Response> {
   const { error } = schemaRegister.validate(req.body);
@@ -31,14 +30,7 @@ async function register(req: Request, res: Response): Promise<Response> {
       email: email.toString(),
       password: hash
     });
-    const token = jsonwebtoken.sign(
-      {
-        id: user._id,
-        email,
-        role: user.role
-      },
-      CONFIG.JWT_TOKEN
-    );
+    const token = signToken(user._id, user.email, user.role);
     return res.status(201).json({
       error: null,
       data: { token }
@@ -69,14 +61,8 @@ async function login(req: Request, res: Response): Promise<Response> {
       error: 'Incorrect login details'
     });
   }
-  const token = jsonwebtoken.sign(
-    {
-      id: user._id,
-      email,
-      role: user.role
-    },
-    CONFIG.JWT_TOKEN
-  );
+  const token = signToken(user._id, user.email, user.role);
+
   return res.status(200).json({
     error: null,
     data: { token }
