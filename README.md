@@ -53,6 +53,8 @@ It's time to run the server.
 
 Once you have the api running you can find the required documentation on the `/docs` route.
 
+> JWT have a 2 minute expiration time for testing purposes.
+
 ## License
 
 This project has been developed under a [MIT](https://opensource.org/licenses/MIT) license.
