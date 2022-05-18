@@ -2,6 +2,14 @@
 
 JWT token project with TypeScript
 
+## Tech Stack
+
+![NodeJS](https://img.shields.io/static/v1?label=&message=Node.js&logoColor=white&color=&style=flat-square&logo=node.js)
+![TypeScript](https://img.shields.io/static/v1?label=&message=TypeScript&logoColor=white&color=blue&style=flat-square&logo=typescript)
+![Express](https://img.shields.io/static/v1?label=&message=Express&logoColor=white&color=9cf&style=flat-square&logo=express)
+![MongoDB](https://img.shields.io/static/v1?label=&message=MongoDB&logoColor=green&color=black&style=flat-square&logo=mongodb)
+![JWT](https://img.shields.io/static/v1?label=&message=JWT&logoColor=white&color=black&style=flat-square&logo=jsonwebtokens)
+
 ## Installation
 
 ### 1) Clone the repository
@@ -29,7 +37,7 @@ You can find an `.env.example` with the required keys.
 
 | KEY        | Description                                              | REQUIRED | DEFAULT |
 | ---------- | -------------------------------------------------------- | -------- | ------- |
-| PORT       | Port on which the server will run                        |  FALSE   | 3030    |
+| PORT       | Port on which the server will run                        | FALSE    | 3030    |
 | MONGO_URI  | MongoDB conenction string                                | TRUE     |
 | JWT_SECRET | Will be used to sign and verify the JWT, keep it secret! | TRUE     |
 
