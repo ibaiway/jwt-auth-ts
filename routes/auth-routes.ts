@@ -25,6 +25,13 @@ const authRouter = Router();
  *       schema:
  *        type: string
  *        example: james@gmail.com
+ *     - name: password
+ *       in: body
+ *       description: Password, min length 8, Uppercase and number required
+ *       required: true
+ *       schema:
+ *        type: string
+ *        example: Passw00rd
  *     requestBody:
  *      required: true
  *      content:

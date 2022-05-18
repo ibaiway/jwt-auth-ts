@@ -22,7 +22,7 @@ const options = {
 
 const swaggerSpec = swaggerJsdoc(options);
 
-function swaggerDocs(app: Application, port: Number) {
+function swaggerDocs(app: Application, _port: number) {
   // Swagger Page
   app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 

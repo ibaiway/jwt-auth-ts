@@ -46,7 +46,7 @@ async function seedUsers() {
 async function seeder() {
   mongoose.connections[0]
     .collection('users')
-    .estimatedDocumentCount(async (err, count) => {
+    .estimatedDocumentCount(async (_err, count) => {
       if (count === 0) {
         seedAdmin();
         seedUsers();

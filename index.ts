@@ -7,7 +7,6 @@ import connect from './db/connect';
 import CONFIG from './config/config';
 import { verifyToken } from './middlewares/auth-middleware';
 import { seeder } from './db/seed';
-import { jobxUsers } from './db/jobx-users';
 import { getUsers } from './controllers/user-controller';
 
 const app: Application = express();

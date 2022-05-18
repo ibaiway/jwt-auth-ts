@@ -2,7 +2,7 @@ import jsonwebtoken from 'jsonwebtoken';
 import CONFIG from '../config/config';
 
 //FOR TESTING PURPOSES TOKENS EXPIRE AFTER 2 MINUTES
-function signToken(id: String, email: String, role: number) {
+function signToken(id: string, email: string, role: number) {
   return jsonwebtoken.sign(
     {
       id,
