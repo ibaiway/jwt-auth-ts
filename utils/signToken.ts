@@ -9,7 +9,7 @@ function signToken(id: String, email: String, role: number) {
       email,
       role
     },
-    CONFIG.JWT_TOKEN,
+    CONFIG.JWT_SECRET,
     { expiresIn: '2min' }
   );
 }

@@ -12,7 +12,7 @@ function verifyToken(req: Request, res: Response, next: NextFunction): void {
     }
     const bearerToken = req.headers.authorization?.substring(7);
 
-    const validToken: any = jsonwebtoken.verify(bearerToken, CONFIG.JWT_TOKEN);
+    const validToken: any = jsonwebtoken.verify(bearerToken, CONFIG.JWT_SECRET);
     if (validToken.role !== 1) {
       throw new Error('Access Forbidden ');
     }
