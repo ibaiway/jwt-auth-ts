@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
+import { randomUUID } from 'crypto';
 import UserModel from '../models/user-model';
 import schemaLogin from '../schemas/schemaLogin';
 import schemaRegister from '../schemas/schemaRegister';
@@ -23,9 +24,19 @@ async function register(req: Request, res: Response): Promise<Response> {
   }
   const salt = await bcrypt.genSalt(10);
   const hash = await bcrypt.hash(password, salt);
+  let id = '';
+  let idExists = true;
+  while (idExists) {
+    id = randomUUID();
+    const user = await UserModel.findOne({ _id: id });
+    if (!user) {
+      idExists = false;
+    }
+  }
 
   try {
     const user = await UserModel.create({
+      _id: id,
       username: username.toString(),
       email: email.toString(),
       password: hash

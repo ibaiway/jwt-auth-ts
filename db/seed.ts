@@ -1,5 +1,8 @@
 import bcrypt from 'bcrypt';
+import mongoose from 'mongoose';
+import { randomUUID } from 'crypto';
 import UserModel from '../models/user-model';
+import { jobxUsers } from './jobx-users';
 
 const adminData = {
   username: 'jobx_admin',
@@ -8,12 +11,13 @@ const adminData = {
   role: 1
 };
 
-export async function seedAdmin() {
+async function seedAdmin() {
   const salt = await bcrypt.genSalt(10);
   const hash = await bcrypt.hash(adminData.password, salt);
+  const id = randomUUID();
   try {
-    await UserModel.deleteOne({ email: adminData.email });
     const user = await UserModel.create({
+      _id: id,
       username: adminData.username,
       email: adminData.email,
       password: hash,
@@ -23,7 +27,32 @@ export async function seedAdmin() {
       console.log('Admin seeder completed');
     }
   } catch (error) {
-    console.log('Error on running DB seeder ', error);
+    console.log('Error on running DB Admin seeder ', error);
     throw error;
   }
 }
+
+async function seedUsers() {
+  try {
+    const users = await UserModel.insertMany(jobxUsers);
+    if (users) {
+      console.log('Users seeder completed');
+    }
+  } catch (error) {
+    console.log('Error on running DB Users seeder ', error);
+    throw error;
+  }
+}
+async function seeder() {
+  console.log(mongoose);
+  mongoose.connections[0].collection('users').count(async (err, count) => {
+    if (count === 0) {
+      seedAdmin();
+      seedUsers();
+    } else {
+      console.log('DB already has users: ' + count);
+    }
+  });
+}
+
+export { seeder };

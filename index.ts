@@ -6,7 +6,7 @@ import { authRouter } from './routes/auth-routes';
 import connect from './db/connect';
 import CONFIG from './config/config';
 import { verifyToken } from './middlewares/auth-middleware';
-import { seedAdmin } from './db/seed';
+import { seeder } from './db/seed';
 import { jobxUsers } from './db/jobx-users';
 
 const app: Application = express();
@@ -63,7 +63,7 @@ connect()
   .then(() => console.log('DB Connected'))
   .catch((e) => console.log(`Error in DB: ${e}`));
 
-seedAdmin();
+//seeder();
 
 app.listen(CONFIG.PORT, (): void => {
   console.log(`The application is listening on port ${CONFIG.PORT}!`);
