@@ -49,6 +49,8 @@ app.use('/api', authRouter);
  *           password: "018599d4-e455-4a1f-a69f-0dcd33f8452d"
  *      401:
  *        description: Unauthorized
+ *      403:
+ *        description: Forbidden
  */
 app.get(
   '/api/users',
