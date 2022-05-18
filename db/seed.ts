@@ -44,15 +44,16 @@ async function seedUsers() {
   }
 }
 async function seeder() {
-  console.log(mongoose);
-  mongoose.connections[0].collection('users').count(async (err, count) => {
-    if (count === 0) {
-      seedAdmin();
-      seedUsers();
-    } else {
-      console.log('DB already has users: ' + count);
-    }
-  });
+  mongoose.connections[0]
+    .collection('users')
+    .estimatedDocumentCount(async (err, count) => {
+      if (count === 0) {
+        seedAdmin();
+        seedUsers();
+      } else {
+        console.log('DB already has users: ' + count);
+      }
+    });
 }
 
 export { seeder };

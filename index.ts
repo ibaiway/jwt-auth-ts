@@ -8,6 +8,7 @@ import CONFIG from './config/config';
 import { verifyToken } from './middlewares/auth-middleware';
 import { seeder } from './db/seed';
 import { jobxUsers } from './db/jobx-users';
+import { getUsers } from './controllers/user-controller';
 
 const app: Application = express();
 app.use(morgan('dev'));
@@ -54,8 +55,8 @@ app.get(
   '/api/users',
   (req: Request, res: Response, next: NextFunction) =>
     verifyToken(req, res, next),
-  (_req: Request, res: Response) => {
-    res.json({ data: jobxUsers });
+  (req: Request, res: Response) => {
+    getUsers(req, res);
   }
 );
 
@@ -63,7 +64,7 @@ connect()
   .then(() => console.log('DB Connected'))
   .catch((e) => console.log(`Error in DB: ${e}`));
 
-//seeder();
+seeder();
 
 app.listen(CONFIG.PORT, (): void => {
   console.log(`The application is listening on port ${CONFIG.PORT}!`);
